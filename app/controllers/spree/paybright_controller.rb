@@ -15,7 +15,7 @@ module Spree
     # It also gets the same parameters of #callback.
     def complete
       handle_callback_params!
-      logger.debug("redirect_path: #{redirect_path(@payment.try(:order))}")
+      logger.info("redirect_path: #{redirect_path(@payment.try(:order))}")
       redirect_to redirect_path(@payment.try(:order))
     end
 
@@ -37,7 +37,7 @@ module Spree
 
     def redirect_path(order)
       return cart_path unless order
-      logger.debug( "************************************************************************************\n                                                                                    \n                                                                                    \n                         redirect_path subdomain: #{request.subdomain}                          \n                                                                                    \n************************************************************************************")
+      logger.info( "************************************************************************************\n                                                                                    \n                                                                                    \n                         redirect_path subdomain: #{request.subdomain}                          \n                                                                                    \n************************************************************************************")
       order.complete? ? order_url(order, subdomain: request.subdomain) : checkout_state_path(order.state)
     end
 
@@ -46,7 +46,7 @@ module Spree
 
       valid, error = SolidusPaybright::CallbackValidator.new(paybright_params).call
       unless valid
-        logger.debug "Paybright: #{error}"
+        logger.info "Paybright: #{error}"
         return [false, error]
       end
 
