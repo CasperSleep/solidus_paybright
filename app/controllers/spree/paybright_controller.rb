@@ -36,6 +36,7 @@ module Spree
 
     def redirect_path(order)
       return cart_path unless order
+      logger.debug( "************************************************************************************\n                                                                                    \n                                                                                    \n                         subdomain: #{request.subdomain}                          \n                                                                                    \n************************************************************************************")
       order.complete? ? order_url(order, subdomain: request.subdomain) : checkout_state_path(order.state)
     end
 
