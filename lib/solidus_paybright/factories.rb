@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :paybright_payment_method, class: Spree::PaymentMethod::Paybright do
-    name "Paybright"
+    name { "Paybright" }
   end
 
   factory :paybright_payment, class: Spree::Payment do
