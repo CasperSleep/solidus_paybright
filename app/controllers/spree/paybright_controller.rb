@@ -65,7 +65,8 @@ module Spree
           @payment.void
         end
 
-        return [false, 'Something went wrong with the order. Your Paybright application has been voided. Try to order again.']
+        message = I18n.t(:paybright_error, 'Something went wrong with the order. Your Paybright application has been voided. Try to order again.')
+        return [false, message]
       end
 
       [true, ""]

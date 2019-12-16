@@ -158,6 +158,7 @@ describe Spree::PaybrightController, type: :controller do
 
     context "with an errored order" do
       before do
+        allow(I18n).to receive(:t).and_return("Something went wrong with the order. Your Paybright application has been voided. Try to order again.")
         allow_any_instance_of(Spree::Payment).to receive(:complete!).and_raise(StandardError)
       end
 
