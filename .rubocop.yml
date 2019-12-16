@@ -4,7 +4,7 @@ AllCops:
   Exclude:
     - 'spec/dummy/**/*'
     - 'vendor/bundle/**/*'
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.6
 
 # Sometimes I believe this reads better
 # This also causes spacing issues on multi-line fixes
@@ -64,7 +64,7 @@ Layout/ElseAlignment:
 Layout/IndentationWidth:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: false
 
 Layout/ClosingParenthesisIndentation:
@@ -73,13 +73,13 @@ Layout/ClosingParenthesisIndentation:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   Enabled: false
 
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
 # From http://relaxed.ruby.style/
@@ -199,7 +199,7 @@ Lint/AssignmentInCondition:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'Rakefile'
 

@@ -5,6 +5,7 @@ gem 'solidus', github: 'solidusio/solidus', branch: branch
 # Provides basic authentication functionality for testing parts of your engine
 gem 'solidus_auth_devise'
 gem 'deface'
+gem 'pry-nav'
 
 if branch == 'master' || branch >= 'v2.3'
   gem 'rails', '~> 5.1.0' # HACK: broken bundler dependency resolution

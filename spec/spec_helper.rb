@@ -86,6 +86,10 @@ RSpec.configure do |config|
     Spree::Core::Engine.routes.default_url_options = { host: "example.com" }
   end
 
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
+  config.filter_run_when_matching(:focus)
+
   # Before each spec check if it is a Javascript test and switch between using database transactions or not where necessary.
   config.before :each do
     DatabaseCleaner.strategy = RSpec.current_example.metadata[:js] ? :truncation : :transaction

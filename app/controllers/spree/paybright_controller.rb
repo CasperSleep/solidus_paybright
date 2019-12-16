@@ -58,7 +58,6 @@ module Spree
       )
 
       begin
-        raise StandardError
         @payment.complete!
         advance_and_complete(@payment.order)
       rescue StandardError

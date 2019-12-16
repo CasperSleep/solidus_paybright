@@ -1,3 +1,4 @@
+require "pry"
 require "spec_helper"
 
 describe Spree::PaybrightController, type: :controller do
@@ -152,6 +153,26 @@ describe Spree::PaybrightController, type: :controller do
             x_reference: 0
           })
         ).to redirect_to "http://test.host/cart"
+      end
+    end
+
+    context "with an errored order" do
+      before do
+        allow_any_instance_of(Spree::Payment).to receive(:complete!).and_raise(StandardError)
+      end
+
+      it "redirects to the payment step" do
+        expect_any_instance_of(Spree::Payment).to receive(:void).once
+
+        expect(
+          get(:complete, params: correct_params)
+        ).to redirect_to "http://test.host/checkout/payment"
+      end
+
+      it "shows a flash message" do
+        get(:complete, params: correct_params)
+
+        expect(flash[:error]).to match(/Something went wrong with the order. Your Paybright application has been voided. Try to order again./)
       end
     end
   end
