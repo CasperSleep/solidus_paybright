@@ -52,15 +52,17 @@ module Spree
         return [false, error]
       end
 
-      @payment.update_attributes!(
-        response_code: paybright_params[:x_gateway_reference],
-        amount: paybright_params[:x_amount]
-      )
-
       begin
+        @payment.update_attributes!(
+          response_code: paybright_params[:x_gateway_reference],
+          amount: paybright_params[:x_amount]
+        )
+
         @payment.complete!
         advance_and_complete(@payment.order)
-      rescue StandardError
+      rescue StandardError => e
+        logger.debug "PAYBRIGHTDEBUG Order number: #{@payment.order.number}: Error: #{e.message}"
+        logger.debug "PAYBRIGHTDEBUG: Response code: #{@payment.response_code}"
         if @payment.response_code.present?
           @payment.void
         end
