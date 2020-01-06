@@ -48,7 +48,7 @@ module Spree
 
       valid, error = SolidusPaybright::CallbackValidator.new(paybright_params).call
       unless valid
-        logger.debug "Paybright: #{error}"
+        logger.info "Paybright Error: #{error}"
         return [false, error]
       end
 
@@ -61,8 +61,8 @@ module Spree
         @payment.complete!
         advance_and_complete(@payment.order)
       rescue StandardError => e
-        logger.debug "PAYBRIGHTDEBUG Order number: #{@payment.order.number}: Error: #{e.message}"
-        logger.debug "PAYBRIGHTDEBUG: Response code: #{@payment.response_code}"
+        logger.info "PAYBRIGHTDEBUG Order number: #{@payment.order.number}: Error: #{e.message}"
+        logger.info "PAYBRIGHTDEBUG: Response code: #{@payment.response_code}"
         if @payment.response_code.present?
           @payment.void
         end
