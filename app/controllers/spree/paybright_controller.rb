@@ -64,6 +64,7 @@ module Spree
         logger.info "PAYBRIGHTDEBUG Order number: #{@payment.order.number}: Error: #{e.message}"
         logger.info "PAYBRIGHTDEBUG: Response code: #{@payment.response_code}"
         if @payment.response_code.present?
+          @payment.update_column(:state, :checkout) if @payment.invalid?
           @payment.void
         end
 
