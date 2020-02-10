@@ -161,18 +161,17 @@ describe Spree::PaybrightController, type: :controller do
         allow_any_instance_of(Spree::Payment).to receive(:complete!).and_raise(StandardError)
       end
 
-      it "redirects to the payment step" do
-        expect_any_instance_of(Spree::Payment).to receive(:void).once
-
+      it "redirects to the completed order page" do
         expect(
           get(:complete, params: correct_params)
-        ).to redirect_to "http://test.host/checkout/payment"
+        ).to redirect_to("http://test.host/orders/R123456789")
       end
 
-      it "shows a flash message" do
+      it "completes the order" do
         get(:complete, params: correct_params)
 
-        expect(flash[:error]).to match(/Something went wrong with the order. Your Paybright application has been voided. Try to order again./)
+        expect(order.reload.state).to eq("complete")
+        expect(order.reload.payments.first.state).to eq("completed")
       end
     end
   end
