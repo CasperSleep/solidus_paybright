@@ -65,7 +65,7 @@ module Spree
         logger.info "PAYBRIGHTDEBUG: Response code: #{@payment.response_code}"
 
         if @payment.response_code.present?
-          @payment.update_column(:state, :completed) if !@payment.completed?
+          @payment.update(state: :completed) if !@payment.completed?
           logger.info "PAYBRIGHTDEBUG: Moving to completed state #{@payment.response_code}"
           advance_and_complete(@payment.order)
         end
